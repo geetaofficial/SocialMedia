@@ -212,3 +212,5 @@ if __name__ == '__main__':
     from django.db.models import Count, Sum, F, Q 
     # learn_query()
     lean_query_date()
+
+    # test
