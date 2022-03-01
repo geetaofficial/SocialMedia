@@ -1,0 +1,39 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home{% endblock title %}
+{% block root %}
+{% block content %}
+<div class="container">
+{% if user.is_authenticated %}
+    <div class="row mt-5">
+        <div class="col" >
+            <h1 class='d-flex justify-content-center font-weight-bold'>welcome {{user}}</h1>
+        </div>
+    </div>
+    {% else %}
+    <div class="row mt-5">
+        <div class="col" >
+            <h1 class='d-flex justify-content-center font-weight-bold'>welcome To Social Media. Please Signup or Login</h1>
+        </div>
+    </div>
+{% endif %}
+    <div class="row">
+            <div class="col-6">
+                <h2 class="text-left font-weight-bold mt-5 text-white bg-dark text-info">Let's get Social.</h2>
+                <h4 class="text-left font-italic mt-5 mr-5">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quod odio fugiat natus ab, deleniti repudiandae modi autem porro nostrum voluptates eveniet, veritatis illo pariatur excepturi eos necessitatibus! Tempora provident itaque vitae accusamus, ab, esse ipsum nobis, blanditiis aliquam optio cupiditate earum ipsam labore repellendus quas unde quam odit adipisci quidem!</h4>
+                <img class="img-thumbnail my-5" src="{% static "img/sec.jpg"%}" alt="no-img",>
+            </div>
+
+            
+            <img class="rounded float-right col-6 my-5" src="{% static "img/first.jpg"%}" alt="no-img",>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock content %}
+
+
+{% endblock root %}

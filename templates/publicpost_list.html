@@ -1,0 +1,81 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Public-List{% endblock title %}
+{% block root %}
+<div class="container">
+    <div class="row mt-5">
+        <div class="col" >
+            <h1 class='d-flex justify-content-center font-weight-bold'>Public Post List</h1>
+
+
+
+<div class="row ">
+  {% for b in object_list %}
+  <div class="card m-5 bg-dark text-white" >
+    <img class="card-img-top" src="..." alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">{{b.user}}</h5>
+      <p class="card-text">{{b.title}}</p>
+      <p class="card-text">{{b.caption}}</p>
+      <p class="card-text">{{b.created}}</p>
+      <p class="card-text">{{b.updated}}</p>
+      <a class="btn btn-info" href="{{b.get_absolute_url}}">Detail</a>
+      <a class="btn btn-info" href="{{b.get_update_url}}">Edit</a>
+      <a class="btn btn-danger" href="{{b.get_delete_url}}">Delete</a>
+      {% if b.comment_set.count %}
+      <p class="card-text">Comments : <span class="badge badge-secondary">{{b.comment_set.count}}</span></p>
+      {% endif %}
+      {% for c in b.comment_set.all %}
+      <p class="card-text">{{c.content}}</p>
+      {% endfor %}
+      {% if user.is_authenticated %}
+          <form method="POST" action="{% url 'create-comment' %}">
+            {% csrf_token %}
+            <input type="text" name="content" style="width: 800px; height: 145px;">
+            <input type="hidden" name="posts" value="{{b.id}}" style="width: 800px; height: 145px;">
+            <button type="submit">Submit Comment</button>
+          </form>
+          
+          {% else %}
+          <a class="btn btn-info" href="{% url 'login' %}">Login</a>
+
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %} 
+      
+      
+
+</div>
+
+      <nav aria-label="Page navigation example">
+        {% if is_paginated %}
+          <ul class="pagination">
+         
+            {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+              <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">previous</a></li>
+            {% endif %}
+
+            {% for i in page_obj.paginator.page_range %}
+              {% if page_obj.number == i %}
+              <li class="page-item active"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+              {% elif i > page_obj.number|add:'-5' and i < page_obj.number|add:'5' %}
+              <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+              {% endif %}
+            {% endfor %}
+          
+            {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link"  href="?page={{ page_obj.next_page_number }}">next</a></li>
+              <li class="page-item"><a class="page-link"  href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a></li>
+            {% endif %}
+        {% endif %}
+        </span>
+    </div>
+</div>
+
+
+
+
+{% endblock root %}

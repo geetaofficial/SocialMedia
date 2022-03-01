@@ -1,0 +1,56 @@
+{% extends 'base.html' %} 
+{% load static %} {% block title %}Profile-Detail{% endblock title %} 
+{% block root %}
+<div class="container">
+    <div class="row mt-5">
+      <div class="col">
+        <h1 class="d-flex justify-content-center font-weight-bold">
+          {{user}}'s Profile
+        </h1>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col text-dark">
+            {{object.profile_image}}
+          </div>
+          
+    </div>
+  <div class="row">
+     <div class="col text-dark p-2 d-flex justify-content-center mx-5">
+        {{object.name}}
+      </div>  
+  </div>  
+  <div class="row">
+    <div class="col text-dark p-2 d-flex justify-content-center mx-5">
+      {{object.user}}
+    </div>    
+  </div>    
+  <div class="row">
+    <div class="col text-dark p-2 d-flex justify-content-center mx-5">
+      {{object.website}}
+    </div>    
+  </div>    
+  <div class="row">
+    <div class="col text-dark p-2 d-flex justify-content-center mx-5">
+      {{object.bio}}
+    </div>    
+  </div>    
+  <div class="row d-flex justify-content-center">
+    
+    {% if object.user == request.user %}
+    <div class="col-1 text-dark p-2">
+      <a class="btn btn-info" href="{{object.get_update_url}}">Edit</a>
+    </div>
+    
+    <div class="col-1 text-dark p-2">
+      <a class="btn btn-danger" href="{{object.get_delete_url}}">Delete</a>
+    </div>
+    
+    {% endif %}
+    <div class="col-1 text-dark p-2">
+        <a class="btn btn-danger" href="{% url 'home' %}">Home</a> 
+      </div>
+      </div>
+</div>
+
+{% endblock root %}

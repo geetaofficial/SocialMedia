@@ -1,0 +1,19 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Logout Confirm{% endblock title %}
+{% block root %}
+<div class="container">
+
+    <div class="row">
+        <div class="col ">
+              <h5 class="mt-5">Are you sure you want to logout? </h5>
+                <hr>
+      
+                <a class="btn btn-danger" href="{% url 'logout' %}">confirm</a>
+                <a class="btn btn-success" href="{% url 'home' %}">Back To Home</a>
+
+        </div>
+    </div>
+</div>
+{% endblock root %}

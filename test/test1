@@ -1,0 +1,7 @@
+from django.db.models.functions import TruncMonth
+
+
+queryset = CustomerDetails.object.filter(month=TruncMonth('created'))
+
+experiments_per_month = Experiment.objects.annotate(month=TruncMonth('start_datetime', tzinfo=melb)).values('month').annotate(  experiments=Count('id'))
+

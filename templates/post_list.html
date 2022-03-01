@@ -1,0 +1,80 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}List{% endblock title %}
+{% block root %}
+<div class="container">
+    <div class="row mt-5">
+        <div class="col" >
+            <h1 class='d-flex justify-content-center font-weight-bold'>Our User Post List</h1>
+
+            
+            
+        </div>
+    </div>
+    <div class="row ">
+        
+        {% for b in object_list %}
+        <div class="card m-5 bg-dark text-white" >
+          <img class="card-img-top" src="..." alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">{{b.user}}</h5>
+            <p class="card-text">{{b.title}}</p>
+            <p class="card-text">{{b.caption}}</p>
+            <p class="card-text">{{b.created}}</p>
+            <p class="card-text">{{b.updated}}</p>
+            <a class="btn btn-info" href="{{b.get_absolute_url}}">Detail</a>
+            <a class="btn btn-info" href="{{b.get_update_url}}">Edit</a>
+            <a class="btn btn-danger" href="{{b.get_delete_url}}">Delete</a>
+            
+            
+            {% comment %} <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}{{comment_form}}
+              <div class=" d-flex justify-content-center">
+              <input class="btn btn-secondary my-3" type="submit" Value="Submit"></input>
+              </div>
+            </form>   {% endcomment %}
+          </div>
+        </div>
+        {% endfor %}  
+      </div>
+      {% comment %} <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+          <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+          <li class="page-item"><a class="page-link" href="?page=2">2</a></li>
+          <li class="page-item"><a class="page-link" href="?page=3">3</a></li>
+          <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
+      </nav> {% endcomment %}
+
+      <nav aria-label="Page navigation example">
+        {% if is_paginated %}
+          <ul class="pagination">
+         
+            {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+              <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">previous</a></li>
+            {% endif %}
+
+            {% for i in page_obj.paginator.page_range %}
+              {% if page_obj.number == i %}
+              <li class="page-item active"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+              {% elif i > page_obj.number|add:'-5' and i < page_obj.number|add:'5' %}
+              <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+              {% endif %}
+            {% endfor %}
+          
+            {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link"  href="?page={{ page_obj.next_page_number }}">next</a></li>
+              <li class="page-item"><a class="page-link"  href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a></li>
+            {% endif %}
+        {% endif %}
+        </span>
+    </div>
+</div>
+
+
+
+
+{% endblock root %}

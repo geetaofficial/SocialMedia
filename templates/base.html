@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" href="{% static 'favicon.ico' %}">
+    {% comment %} <link rel="stylesheet" href="{% static 'assets/plugins/jquery-ui/jquery-ui.min.css' %}"> {% endcomment %}
+</head>
+{% comment %} <body style="background-image: url('{% static "img/first.jpg"%}')"> {% endcomment %}
+    
+    <nav class="navbar px-2 navbar-expand-lg  navbar-dark bg-dark">
+        <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'img/social-media.png' %}" alt="Social Media"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="container-fluid collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'public-posts' %}">Public Posts</a>
+                </li>                
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'all-profiles' %}">Profile List</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'create' %}">Add Post</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'all-posts' %}">Post List</a>
+                </li>
+                {% endif %}
+                
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Welcome {{user}}</a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout-confirm' %}">Logout</a>
+                </li>
+
+                {% else %}
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'signup' %}">Signup</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+
+                {% endif %}
+
+                
+            </ul>                
+
+            </div>
+        </nav>
+        {% if messages %}
+            <div class="row pt-4 d-flex justify-content-center">
+                {% for message in messages %}
+                    
+                    <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+  
+        {% block root %}{% endblock root %}
+
+    
+<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+{% comment %} <script src="{% static 'assets/js/popper.min.js' %}"></script>
+<script src="{% static 'assets/plugins/jquery-confirm/js/jquery-confirm.js' %}"></script>
+<script src="{% static 'assets/plugins/jquery-ui/jquery-ui.min.js' %}"></script> {% endcomment %}
+<script src="{% static 'bootstrap/bootstrap.min.js' %}"></script>
+</body>
+</html>
